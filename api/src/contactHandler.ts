@@ -27,7 +27,7 @@ export default async function contactHandle(form: note) {
             `<p style="font-size: 12px">${form.email}</p>` +
             '</div>'
     }
-    await transporter.sendMail(mailToUs)
+    transporter.sendMail(mailToUs).catch()
 
     // send message for client
     const mailToClient = {
@@ -40,7 +40,7 @@ export default async function contactHandle(form: note) {
             `<p style="font-size: 11px">parashchenko.fedor@gmail.com</p>` +
             '</div>'
     }
-    await transporter.sendMail(mailToClient)
+    transporter.sendMail(mailToClient).catch()
 
     return 'success'
 }
