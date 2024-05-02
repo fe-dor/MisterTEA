@@ -1,7 +1,6 @@
 import {Elysia, t} from "elysia";
 import * as mongoose from "mongoose";
 import {BlackTea, FlavoredTea, FruitTea, GreenTea, Other} from "./models/Product";
-import Cart from "./models/Cart";
 import {addItemToCart, createCart, getCart, removeItemFromCart} from "./cartHandler";
 import contactHandle from "./contactHandler";
 import purchaseHandle from "./purchaseHandler";
@@ -143,15 +142,3 @@ const app = new Elysia()
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
-
-/*const lunCin = new GreenTea({
-    name: "Зеленый чай ЛунЦзин (Колодец Дракона). Урожай 2023 года",
-    price: 578,
-    description: "Отличный повседневный вариант знаменитого сорта китайского зеленого чая." +
-        " Чай Колодец Дракона, цена которого демократична, а качество не уступает элитным сортам " +
-        "прекрасно, подойдет тем, кто только начинает свое знакомство с настоящим китайским чаем. ",
-    count: 50
-})*/
-
-/*lunCin.save().then(() => {console.log("Written in DB successfully")});*/
-
