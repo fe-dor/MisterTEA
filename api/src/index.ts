@@ -8,12 +8,14 @@ import {post, put, remove, sign} from "./adminHandler";
 import {jwt} from "@elysiajs/jwt";
 import {cookie} from "@elysiajs/cookie";
 import { swagger } from '@elysiajs/swagger'
+import { cors } from '@elysiajs/cors'
 
 
 await mongoose.connect(<string>Bun.env.MONGO)
 
 const app = new Elysia()
     .use(swagger())
+    .use(cors())
 
     // catalog
     .get("/green",  () => { return GreenTea.find() })
