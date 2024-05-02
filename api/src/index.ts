@@ -19,15 +19,30 @@ const app = new Elysia()
 
     // catalog
     .get("/green",  () => { return GreenTea.find() })
-    .get("/green/:id",  ({ params: { id } }) => { return GreenTea.findById(id) })
+    .get("/green/:id", async ({params: {id}}) => {
+        const res = await GreenTea.findById(id)
+        return res?.toJSON()
+    })
     .get("/black",  () => { return BlackTea.find() })
-    .get("/black/:id",  ({ params: { id } }) => { return BlackTea.findById(id) })
+    .get("/black/:id",  async ({params: {id}}) => {
+        const res = await BlackTea.findById(id)
+        return res?.toJSON()
+    })
     .get("/fruit",  () => { return FruitTea.find() })
-    .get("/fruit/:id",  ({ params: { id } }) => { return FruitTea.findById(id)} )
+    .get("/fruit/:id",  async ({params: {id}}) => {
+        const res = await FruitTea.findById(id)
+        return res?.toJSON()
+    })
     .get("/flavored",  () => { return FlavoredTea.find() })
-    .get("/flavored/:id",  ({ params: {id } }) => { return FlavoredTea.findById(id) })
+    .get("/flavored/:id",  async ({params: {id}}) => {
+        const res = await FlavoredTea.findById(id)
+        return res?.toJSON()
+    })
     .get("/other",  () => { return Other.find() })
-    .get("/other/:id",  ({ params: {id } }) => { return Other.findById(id) })
+    .get("/other/:id",  async ({params: {id}}) => {
+        const res = await Other.findById(id)
+        return res?.toJSON()
+    })
 
     // create new cart and return their ID
     .post("/create_cart", async ({set}) => {
