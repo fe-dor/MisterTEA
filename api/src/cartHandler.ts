@@ -9,7 +9,7 @@ export async function createCart() {
         totalPrice: 0,
         expireAt: new Date((new Date().valueOf() + (86400 * 7 * 1000)))
     })
-    return await newCart.save()
+    return (await newCart.save()).toJSON()
 }
 
 export async function getCart(cart: string) {
@@ -69,7 +69,7 @@ export async function addItemToCart(cart: string, type: string, id: string, coun
 
     // update cart
     cartObject.set({ items: itemsList, totalPrice: totalPrice, expireAt: new Date(new Date().valueOf() + (86400 * 7 * 1000)) })
-    return cartObject.save()
+    return (await cartObject.save()).toJSON()
 }
 
 export async function removeItemFromCart(cart: string, id: string) {

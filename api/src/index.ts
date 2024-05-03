@@ -47,6 +47,7 @@ const app = new Elysia()
     // create new cart and return their ID
     .post("/create_cart", async ({set}) => {
         const cart = await createCart()
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
         set.headers['Set-Cookie'] =
             `cart=${cart._id}; Max-Age=${7 * 86400}; HttpOnly; Path=/`
         return cart
@@ -54,7 +55,8 @@ const app = new Elysia()
     // get cart by id
     .get("/cart",  ({ cookie: { cart } }) => { return getCart(cart.toString()) })
     // add item to cart and return updated cart
-    .post("/cart/:type/:id/:num",  ({ params: { type, id, num }, cookie: { cart } }) => {
+    .post("/cart/:type/:id/:num",  ({ set, params: { type, id, num }, cookie: { cart } }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
         return addItemToCart(cart.toString(), type, id, Number(num)) })
     // remove item from cart and return updated cart
     .put("/cart/:id",  ({ params: { id  }, cookie: { cart } }) => {
