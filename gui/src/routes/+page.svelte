@@ -3,13 +3,21 @@
 	import SliderReviews from '../components/SliderReviews/SliderReviews.svelte';
 	import Form from '../components/Form/Form.svelte';
 	import { goto } from '$app/navigation';
+	import Girl from '$assets/girl.webp';
+	import Green from '$assets/green.png';
+	import Black from '$assets/black.png';
+	import Flavored from '$assets/flavored.png';
+	import Fruit from '$assets/fruit.png';
+	import Prod1 from '$assets/prod1.png';
+	import Prod2 from '$assets/prod2.png';
+	import Prod3 from '$assets/prod3.png';
 </script>
 
 <title>MisterTEA - магазин чай</title>
 <main>
 	<picture class="pic">
 		<source srcset="/src/assets/boy.webp" media="(max-width: 1150px)" />
-		<img class="img" src="/src/assets/girl.webp" alt="" />
+		<img class="img" src={Girl} alt="" />
 	</picture>
 	<div class="content">
 		<p class="head">ЧАЙ</p>
@@ -20,7 +28,7 @@
 					goto('/green');
 				}}
 			>
-				<img class="teaPic" src="/src/assets/green.png" alt="Зеленный чай" />
+				<img class="teaPic" src={Green} alt="Зеленный чай" />
 				<span class="teaText">Зеленый чай</span>
 			</button>
 			<button
@@ -29,7 +37,7 @@
 					goto('/black');
 				}}
 			>
-				<img class="teaPic" src="/src/assets/black.png" alt="Черный чай" />
+				<img class="teaPic" src={Black} alt="Черный чай" />
 				<span class="teaText">Черный чай</span>
 			</button>
 			<button
@@ -38,7 +46,7 @@
 					goto('/flavored');
 				}}
 			>
-				<img class="teaPic" src="/src/assets/flavored.png" alt="Травяной чай" />
+				<img class="teaPic" src={Flavored} alt="Травяной чай" />
 				<span class="teaText">Травяной чай</span>
 			</button>
 			<button
@@ -47,22 +55,38 @@
 					goto('/fruit');
 				}}
 			>
-				<img class="teaPic" src="/src/assets/fruit.png" alt="Фруктовый чай" />
+				<img class="teaPic" src={Fruit} alt="Фруктовый чай" />
 				<span class="teaText">Фруктовый чай</span>
 			</button>
 		</div>
 		<p class="head">популярные продукты</p>
 		<div class="groupsPopular">
-			<button class="group" onclick={() => {goto('other/66325e25e6651482c2882174')}}>
-				<img class="productPic" src="/src/assets/prod1.png" alt="Чайный набор" />
+			<button
+				class="group"
+				onclick={() => {
+					goto('other/66325e25e6651482c2882174');
+				}}
+			>
+				<img class="productPic" src={Prod1} alt="Чайный набор" />
 				<span class="teaText">Чайный набор 1</span>
 			</button>
-			<button class="group" onclick={() => {goto('other/6633e06cdd4c15066d0684c5')}}>
-				<img class="productPic" src="/src/assets/prod2.png" alt="Чайный набор" />
+			<button
+				class="group"
+				onclick={() => {
+					goto('other/6633e06cdd4c15066d0684c5');
+				}}
+			>
+				<img class="productPic" src={Prod2} alt="Чайный набор" />
 				<span class="teaText">Чайный набор 2</span>
 			</button>
-			<button class="group" id="lastItem" onclick={() => {goto('other/6633e06fdd4c15066d0684c6')}}>
-				<img class="productPic" src="/src/assets/prod3.png" alt="Чайный набор" />
+			<button
+				class="group"
+				id="lastItem"
+				onclick={() => {
+					goto('other/6633e06fdd4c15066d0684c6');
+				}}
+			>
+				<img class="productPic" src={Prod3} alt="Чайный набор" />
 				<span class="teaText">Чайный набор 3</span>
 			</button>
 		</div>
