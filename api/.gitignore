@@ -42,7 +42,4 @@ package-lock.json
 **/*.bun
 
 .idea/
-.bun.lockb
-bun.lockb
-bun.lockb/
 .env
