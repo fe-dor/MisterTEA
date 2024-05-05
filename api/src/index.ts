@@ -7,8 +7,8 @@ import purchaseHandle from "./purchaseHandler";
 import {post, put, remove, sign} from "./adminHandler";
 import {jwt} from "@elysiajs/jwt";
 import {cookie} from "@elysiajs/cookie";
-import { swagger } from '@elysiajs/swagger'
-import { cors } from '@elysiajs/cors'
+import {swagger} from '@elysiajs/swagger'
+import {cors} from '@elysiajs/cors'
 
 
 await mongoose.connect(<string>Bun.env.MONGO)
@@ -20,49 +20,60 @@ const app = new Elysia()
     // catalog
     .get("/green",  () => { return GreenTea.find() })
     .get("/green/:id", async ({params: {id}}) => {
-        const res = await GreenTea.findById(id)
-        return res?.toJSON()
+        return (await GreenTea.findById(id))?.toJSON()
     })
     .get("/black",  () => { return BlackTea.find() })
     .get("/black/:id",  async ({params: {id}}) => {
-        const res = await BlackTea.findById(id)
-        return res?.toJSON()
+        return (await BlackTea.findById(id))?.toJSON()
     })
     .get("/fruit",  () => { return FruitTea.find() })
     .get("/fruit/:id",  async ({params: {id}}) => {
-        const res = await FruitTea.findById(id)
-        return res?.toJSON()
+        return (await FruitTea.findById(id))?.toJSON()
     })
     .get("/flavored",  () => { return FlavoredTea.find() })
     .get("/flavored/:id",  async ({params: {id}}) => {
-        const res = await FlavoredTea.findById(id)
-        return res?.toJSON()
+        return (await FlavoredTea.findById(id))?.toJSON()
     })
     .get("/other",  () => { return Other.find() })
     .get("/other/:id",  async ({params: {id}}) => {
-        const res = await Other.findById(id)
-        return res?.toJSON()
+        return (await Other.findById(id))?.toJSON()
     })
 
     // create new cart and return their ID
-    .post("/create_cart", async ({set}) => {
+    .post("/create_cart", async ({ set }) => {
         const cart = await createCart()
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
         set.headers['Set-Cookie'] =
             `cart=${cart._id}; Max-Age=${7 * 86400}; HttpOnly; Path=/`
         return cart
     })
     // get cart by id
-    .get("/cart",  ({ cookie: { cart } }) => { return getCart(cart.toString()) })
+    .get("/cart",  async ({set, cookie: {cart}}) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        return await getCart(cart.toString())
+    })
     // add item to cart and return updated cart
-    .post("/cart/:type/:id/:num",  ({ params: { type, id, num }, cookie: { cart } }) => {
-        return addItemToCart(cart.toString(), type, id, Number(num)) })
+    .post("/cart/:type/:id/:num",  async ({ set, params: { type, id, num }, cookie: { cart } }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        return await addItemToCart(cart.toString(), type, id, Number(num))
+    })
     // remove item from cart and return updated cart
-    .put("/cart/:id",  ({ params: { id  }, cookie: { cart } }) => {
-        return removeItemFromCart(cart.toString(), id) })
+    .put("/cart/:id",  async ({ set, params: { id  }, cookie: { cart } }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        return await removeItemFromCart(cart.toString(), id)
+    })
+    .options("/cart/:id", ({ set }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        set.headers['Content-Type'] = 'application/json'
+        set.headers['Access-Control-Allow-Headers'] = 'content-type'
+        set.headers['Access-Control-Allow-Methods'] = 'PUT'
+        return
+    })
 
     // purchase
-    .post("/purchase", ( { cookie: { cart }, body }) => {
-        return purchaseHandle(cart.toString()   , body)
+    .post("/purchase", async ( { set, cookie: { cart }, body }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        return await purchaseHandle(cart.toString(), body)
     }, {
         body: t.Object({
             name: t.String(),
@@ -72,10 +83,16 @@ const app = new Elysia()
             address: t.String()
         })
     })
+    .options("/purchase", ({ set }) => {
+        set.headers['Access-Control-Allow-Origin'] = <string>Bun.env.CLIENT
+        set.headers['Content-Type'] = 'application/json'
+        set.headers['Access-Control-Allow-Headers'] = 'content-type'
+        return
+    })
 
     // contact
-    .post("/contact", ({ body }) => {
-        return contactHandle(body)
+    .post("/contact", async ({body}) => {
+        return await contactHandle(body)
     }, {
         body: t.Object({
             theme: t.String(),

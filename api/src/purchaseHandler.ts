@@ -48,12 +48,12 @@ export default async function purchaseHandle(cart: string, purchase: simplePurch
             '<h1 style="font-size: 18px">Вы оставили заявку на покупку!</h1>' +
             `<p style="font-size: 14px">Пожалуйста проверьте выбранные товары:</p>` +
             `<ul>${getPurchasesInHTML(itemsList)}</ul>` +
-            `<p style="font-size: 14px">Сумма покупки: ${totalPrice}</p>` +
+            `<p style="font-size: 14px">Сумма покупки: ${totalPrice}р</p>` +
             `<p style="font-size: 10px">С уважением, MisterTEA</p>` +
             `<p style="font-size: 11px">parashchenko.fedor@gmail.com</p>` +
             '</div>'
     }
-    await transporter.sendMail(customerMail)
+    transporter.sendMail(customerMail).catch()
 
     // send message for us
     const ourMail = {
@@ -70,7 +70,7 @@ export default async function purchaseHandle(cart: string, purchase: simplePurch
             `<p style="font-size: 14px">Сумма покупки: ${totalPrice}</p>` +
             '</div>'
     }
-    await transporter.sendMail(ourMail)
+    transporter.sendMail(ourMail).catch()
 
     // delete cart
     await Cart.deleteOne({_id: cart})

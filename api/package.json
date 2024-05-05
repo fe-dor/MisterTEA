@@ -8,6 +8,7 @@
   "dependencies": {
     "@elysiajs/cookie": "^0.8.0",
     "@elysiajs/jwt": "^1.0.2",
+    "@elysiajs/cors": "^1.0.2",
     "@elysiajs/swagger": "^1.0.3",
     "@types/nodemailer": "^6.4.14",
     "bcrypt-ts": "^5.0.2",

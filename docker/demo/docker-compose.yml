@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  gui:
+    build:
+    command:
+  api:
+
+  db:
+
