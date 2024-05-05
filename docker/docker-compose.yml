@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
  api:
-    build: ./api
+    build: ./../api
     ports:
       - "3000:3000"
  gui:
-    build: ./gui
+    build: ./../gui
     ports:
       - "4173:4173"
